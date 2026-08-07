@@ -232,59 +232,57 @@ export function buildCatalogCard({ item, index, isotypeDataUri }) {
   );
 }
 
-// Portada del perfil de WhatsApp Business (1125x600). WhatsApp recorta los
-// bordes según el dispositivo, así que todo lo importante va al centro.
+// Portada del perfil de WhatsApp Business (1125x600).
+//
+// Deliberadamente sin texto ni logo centrado: WhatsApp monta la foto de perfil
+// justo en el centro y recorta los bordes distinto en cada dispositivo, así que
+// cualquier elemento "importante" acaba tapado o cortado. En su lugar va una
+// textura de marca que se lee bien con cualquier recorte.
 export function buildCover({ isotypeDataUri }) {
+  const TILES = 96;
+
   return h(
     "div",
     {
       display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
+      position: "relative",
       width: "100%",
       height: "100%",
       backgroundColor: COLORS.bg,
-      backgroundImage: `radial-gradient(circle at 50% 45%, ${COLORS.accentSoft} 0%, transparent 55%)`,
-      fontFamily: FONTS.sans,
+      overflow: "hidden",
     },
 
-    isotypeImg(isotypeDataUri, 132),
-
-    h(
-      "div",
-      {
-        fontFamily: FONTS.mono,
-        fontSize: 52,
-        color: COLORS.text,
-        letterSpacing: 12,
-        marginTop: 28,
-      },
-      "GESEEN"
-    ),
-
+    // Retícula de isotipos, muy tenue: el patrón sobrevive cualquier recorte.
     h(
       "div",
       {
         display: "flex",
-        alignItems: "center",
-        marginTop: 22,
+        flexWrap: "wrap",
+        alignContent: "flex-start",
+        width: "100%",
+        height: "100%",
+        paddingTop: 34,
+        paddingLeft: 34,
       },
-      h("div", { width: 40, height: 1, backgroundColor: COLORS.textFaint }),
-      h(
-        "div",
-        {
-          fontFamily: FONTS.serif,
-          fontStyle: "italic",
-          fontSize: 34,
-          color: COLORS.textDim,
-          marginLeft: 20,
-          marginRight: 20,
-        },
-        "Something you haven't ever seen"
-      ),
-      h("div", { width: 40, height: 1, backgroundColor: COLORS.textFaint })
-    )
+      Array.from({ length: TILES }, (_, i) =>
+        isotypeImg(isotypeDataUri, 56, {
+          opacity: 0.16,
+          marginRight: 62,
+          marginBottom: 34,
+        })
+      )
+    ),
+
+    // Resplandor de acento fuera del centro, para que la foto de perfil no lo tape.
+    h("div", {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundImage:
+        "radial-gradient(circle at 16% 28%, rgba(124,134,255,0.32) 0%, transparent 44%), radial-gradient(circle at 86% 76%, rgba(124,134,255,0.26) 0%, transparent 42%)",
+    })
   );
 }
 
