@@ -70,6 +70,52 @@ export const VARIANTS = [
   },
 ];
 
+// Anuncios para campañas "Clic para WhatsApp": el objetivo no es que visiten
+// el sitio, sino que abran una conversación. Copy de baja fricción y CTA en
+// verde, respetando la regla de la landing (verde = solo WhatsApp).
+export const WA_VARIANTS = [
+  {
+    id: "wa-consulta",
+    eyebrow: "CONSULTA SIN COSTO",
+    headline: "Cuéntanos qué necesita tu negocio. Te decimos si se puede.",
+    sub: "Respondemos el mismo día. Sin compromiso.",
+    cta: "Escríbenos por WhatsApp",
+    whatsapp: true,
+  },
+  {
+    id: "wa-cotiza",
+    eyebrow: "COTIZACIÓN",
+    headline: "¿Cuánto costaría automatizar tu negocio?",
+    sub: "Mándanos un mensaje y te lo decimos.",
+    cta: "Preguntar por WhatsApp",
+    whatsapp: true,
+  },
+  {
+    id: "wa-idea",
+    eyebrow: "PROYECTOS A LA MEDIDA",
+    headline: "¿Tienes una idea? Nosotros la construimos.",
+    sub: "Escríbenos y la aterrizamos contigo.",
+    cta: "Mándanos un mensaje",
+    whatsapp: true,
+  },
+  {
+    id: "wa-bot",
+    eyebrow: "BOTS CON IA",
+    headline: "Tu WhatsApp puede vender y agendar solo.",
+    sub: "Te mostramos cómo funciona, por WhatsApp.",
+    cta: "Ver cómo funciona",
+    whatsapp: true,
+  },
+  {
+    id: "wa-cuaderno",
+    eyebrow: "AUTOMATIZACIÓN",
+    headline: "Deja el cuaderno. Nosotros lo digitalizamos.",
+    sub: "Escríbenos y te decimos por dónde empezar.",
+    cta: "Empezar por WhatsApp",
+    whatsapp: true,
+  },
+];
+
 // Escalas por formato: cada lienzo necesita su propio ritmo tipográfico.
 // padTop/padBottom extra en story: Instagram tapa ~14% arriba y ~20% abajo
 // con su propia interfaz, así que el contenido se mantiene en la zona segura.
@@ -180,8 +226,8 @@ export function buildAd({ variant, format, isotypeDataUri, domain }) {
         "div",
         {
           display: "flex",
-          backgroundColor: COLORS.accent,
-          color: "#FFFFFF",
+          backgroundColor: variant.whatsapp ? COLORS.whatsapp : COLORS.accent,
+          color: variant.whatsapp ? "#0A0A0B" : "#FFFFFF",
           fontSize: s.cta,
           fontWeight: 500,
           paddingTop: 18,

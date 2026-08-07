@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/language-context";
 import { waLink, mailLink } from "@/lib/site";
+import { trackContact } from "@/components/MetaPixel";
 import InkBlob from "@/components/decor/InkBlob";
 
 function WhatsAppGlyph(props) {
@@ -38,6 +39,7 @@ export default function Contact() {
             href={waLink(lang)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackContact("whatsapp")}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -48,6 +50,7 @@ export default function Contact() {
           </motion.a>
           <motion.a
             href={mailLink()}
+            onClick={() => trackContact("email")}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}

@@ -10,7 +10,15 @@ npm run ads
 ```
 
 Los PNG salen en `ads/out/` (esa carpeta no se sube a git — se regenera
-corriendo el comando). Cada variante se exporta en 3 formatos:
+corriendo el comando). Hay dos juegos de anuncios:
+
+- **Sin prefijo** (`cuaderno`, `catalogo`, `bot`, `marca`, `imaginacion`):
+  mandan a la landing. El botón va en el morado de la marca.
+- **Con prefijo `wa-`**: pensados para campañas de "Clic para WhatsApp".
+  El botón va en verde, igual que en la landing, donde el verde está
+  reservado solo para WhatsApp.
+
+Cada variante se exporta en 3 formatos:
 
 | Formato | Medidas | Dónde va |
 |---|---|---|
@@ -35,7 +43,10 @@ anuncio nuevo, copia uno de los bloques existentes y cámbiale el texto:
 
 Vuelve a correr `npm run ads` y aparecen los 3 formatos nuevos.
 
-Dos opciones extra para darle otro aire a una variante:
+Los anuncios de WhatsApp viven aparte, en la lista `WA_VARIANTS` del mismo
+archivo, y llevan `whatsapp: true` para que el botón salga en verde.
+
+Opciones extra para darle otro aire a una variante:
 `headlineSerif: true` pone el titular en la serif itálica de la marca, y
 `subSerif: true` hace lo mismo con la línea de apoyo.
 

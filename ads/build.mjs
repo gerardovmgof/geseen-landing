@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import { FORMATS } from "./theme.mjs";
-import { VARIANTS, buildAd } from "./templates.mjs";
+import { VARIANTS, WA_VARIANTS, buildAd } from "./templates.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = join(HERE, "out");
@@ -35,7 +35,7 @@ const isotypeDataUri = `data:image/png;base64,${isotype.toString("base64")}`;
 mkdirSync(OUT, { recursive: true });
 
 let count = 0;
-for (const variant of VARIANTS) {
+for (const variant of [...VARIANTS, ...WA_VARIANTS]) {
   for (const [formatName, format] of Object.entries(FORMATS)) {
     const markup = buildAd({
       variant,

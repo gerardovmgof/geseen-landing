@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { LanguageProvider } from "@/lib/language-context";
+import MetaPixel from "@/components/MetaPixel";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-text font-sans">
+        <MetaPixel />
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
