@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLang } from "@/lib/language-context";
 import { SLOGAN } from "@/lib/content";
 import { waLink, mailLink, SITE } from "@/lib/site";
@@ -26,6 +27,10 @@ export default function Footer() {
           <a href={mailLink()} className="transition-colors hover:text-text">
             {SITE.email}
           </a>
+          <span aria-hidden>·</span>
+          <Link href="/privacidad" className="transition-colors hover:text-text">
+            {t.footer.privacy}
+          </Link>
         </div>
 
         <p className="text-xs text-text-faint">
