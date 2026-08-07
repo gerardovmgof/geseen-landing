@@ -116,6 +116,178 @@ export const WA_VARIANTS = [
   },
 ];
 
+// Artículos del catálogo de WhatsApp Business. Se ven chicos y en cuadrícula,
+// así que el nombre manda y todo lo demás se reduce al mínimo.
+export const CATALOG = [
+  {
+    id: "cat-01-web",
+    nombre: "Sitios y aplicaciones web",
+    linea: "Rápidos y hechos a tu medida.",
+  },
+  {
+    id: "cat-02-catalogo",
+    nombre: "Catálogo con pedidos por WhatsApp",
+    linea: "El pedido llega directo a tu chat.",
+  },
+  {
+    id: "cat-03-bot",
+    nombre: "Bot de WhatsApp con IA",
+    linea: "Contesta y agenda citas solo.",
+  },
+  {
+    id: "cat-04-automatizacion",
+    nombre: "Automatización con IA",
+    linea: "Lo repetitivo, hecho solo.",
+  },
+  {
+    id: "cat-05-qr",
+    nombre: "Menú digital QR",
+    linea: "Se abre al escanear el código.",
+  },
+  {
+    id: "cat-06-panel",
+    nombre: "Panel de administración",
+    linea: "Controla tu negocio tú mismo.",
+  },
+];
+
+// Ficha cuadrada de catálogo: número gigante de fondo como elemento gráfico
+// y el nombre del servicio al frente, legible aunque se vea en miniatura.
+export function buildCatalogCard({ item, index, isotypeDataUri }) {
+  return h(
+    "div",
+    {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      position: "relative",
+      width: "100%",
+      height: "100%",
+      backgroundColor: COLORS.bg,
+      backgroundImage: `radial-gradient(circle at 78% 22%, ${COLORS.accentSoft} 0%, transparent 50%)`,
+      padding: 72,
+      fontFamily: FONTS.sans,
+    },
+
+    // Número de fondo, grande y tenue
+    h(
+      "div",
+      {
+        position: "absolute",
+        top: 120,
+        right: 72,
+        fontFamily: FONTS.mono,
+        fontSize: 300,
+        color: COLORS.surface2,
+        lineHeight: 1,
+      },
+      String(index + 1).padStart(2, "0")
+    ),
+
+    h(
+      "div",
+      { display: "flex", alignItems: "center" },
+      isotypeImg(isotypeDataUri, 52, { marginRight: 16 }),
+      h(
+        "div",
+        {
+          fontFamily: FONTS.mono,
+          fontSize: 22,
+          color: COLORS.text,
+          letterSpacing: 2,
+        },
+        "GESEEN"
+      )
+    ),
+
+    h(
+      "div",
+      { display: "flex", flexDirection: "column" },
+      h(
+        "div",
+        {
+          width: 64,
+          height: 3,
+          backgroundColor: COLORS.accent,
+          marginBottom: 32,
+        }
+      ),
+      h(
+        "div",
+        {
+          fontSize: 68,
+          fontWeight: 600,
+          color: COLORS.text,
+          lineHeight: 1.08,
+          letterSpacing: -1.5,
+        },
+        item.nombre
+      ),
+      h(
+        "div",
+        { fontSize: 30, color: COLORS.textDim, marginTop: 20 },
+        item.linea
+      )
+    )
+  );
+}
+
+// Portada del perfil de WhatsApp Business (1125x600). WhatsApp recorta los
+// bordes según el dispositivo, así que todo lo importante va al centro.
+export function buildCover({ isotypeDataUri }) {
+  return h(
+    "div",
+    {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+      height: "100%",
+      backgroundColor: COLORS.bg,
+      backgroundImage: `radial-gradient(circle at 50% 45%, ${COLORS.accentSoft} 0%, transparent 55%)`,
+      fontFamily: FONTS.sans,
+    },
+
+    isotypeImg(isotypeDataUri, 132),
+
+    h(
+      "div",
+      {
+        fontFamily: FONTS.mono,
+        fontSize: 52,
+        color: COLORS.text,
+        letterSpacing: 12,
+        marginTop: 28,
+      },
+      "GESEEN"
+    ),
+
+    h(
+      "div",
+      {
+        display: "flex",
+        alignItems: "center",
+        marginTop: 22,
+      },
+      h("div", { width: 40, height: 1, backgroundColor: COLORS.textFaint }),
+      h(
+        "div",
+        {
+          fontFamily: FONTS.serif,
+          fontStyle: "italic",
+          fontSize: 34,
+          color: COLORS.textDim,
+          marginLeft: 20,
+          marginRight: 20,
+        },
+        "Something you haven't ever seen"
+      ),
+      h("div", { width: 40, height: 1, backgroundColor: COLORS.textFaint })
+    )
+  );
+}
+
 // Escalas por formato: cada lienzo necesita su propio ritmo tipográfico.
 // padTop/padBottom extra en story: Instagram tapa ~14% arriba y ~20% abajo
 // con su propia interfaz, así que el contenido se mantiene en la zona segura.

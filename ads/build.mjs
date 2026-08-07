@@ -6,7 +6,14 @@ import { fileURLToPath } from "node:url";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import { FORMATS } from "./theme.mjs";
-import { VARIANTS, WA_VARIANTS, buildAd } from "./templates.mjs";
+import {
+  VARIANTS,
+  WA_VARIANTS,
+  CATALOG,
+  buildAd,
+  buildCatalogCard,
+  buildCover,
+} from "./templates.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = join(HERE, "out");
@@ -34,6 +41,13 @@ const isotypeDataUri = `data:image/png;base64,${isotype.toString("base64")}`;
 
 mkdirSync(OUT, { recursive: true });
 
+async function toPng(markup, width, height) {
+  const svg = await satori(markup, { width, height, fonts });
+  return new Resvg(svg, { fitTo: { mode: "width", value: width } })
+    .render()
+    .asPng();
+}
+
 let count = 0;
 for (const variant of [...VARIANTS, ...WA_VARIANTS]) {
   for (const [formatName, format] of Object.entries(FORMATS)) {
@@ -44,17 +58,7 @@ for (const variant of [...VARIANTS, ...WA_VARIANTS]) {
       domain: DOMAIN,
     });
 
-    const svg = await satori(markup, {
-      width: format.width,
-      height: format.height,
-      fonts,
-    });
-
-    const png = new Resvg(svg, {
-      fitTo: { mode: "width", value: format.width },
-    })
-      .render()
-      .asPng();
+    const png = await toPng(markup, format.width, format.height);
 
     const file = `${variant.id}-${formatName}.png`;
     writeFileSync(join(OUT, file), png);
@@ -63,4 +67,20 @@ for (const variant of [...VARIANTS, ...WA_VARIANTS]) {
   }
 }
 
-console.log(`\n${count} anuncios generados en ads/out/`);
+// Fichas del catálogo de WhatsApp Business: siempre cuadradas.
+for (const [index, item] of CATALOG.entries()) {
+  const markup = buildCatalogCard({ item, index, isotypeDataUri });
+  const png = await toPng(markup, 1080, 1080);
+  const file = `${item.id}.png`;
+  writeFileSync(join(OUT, file), png);
+  console.log(`✓ ${file}  1080x1080  (catálogo WhatsApp)`);
+  count++;
+}
+
+// Portada del perfil de WhatsApp Business.
+const coverPng = await toPng(buildCover({ isotypeDataUri }), 1125, 600);
+writeFileSync(join(OUT, "wa-portada.png"), coverPng);
+console.log("✓ wa-portada.png  1125x600  (portada WhatsApp Business)");
+count++;
+
+console.log(`\n${count} imágenes generadas en ads/out/`);
