@@ -232,6 +232,42 @@ export function buildCatalogCard({ item, index, isotypeDataUri }) {
   );
 }
 
+// Foto de perfil para redes (cuadrada, recortada en círculo por la plataforma).
+// Solo el isotipo, sin wordmark: el lockup completo (como el que ya tenían en
+// WhatsApp) no cabe legible dentro de un círculo pequeño.
+//
+// El isotipo es un trazo angosto (proporción ~0.36:1), así que aunque se
+// agrande no llena el cuadro a los lados. Para que no se sienta como margen
+// muerto, un anillo delgado en el acento marca la zona segura del círculo
+// (92% del lienzo) y un resplandor radial le da profundidad al fondo — el
+// isotipo queda al 80% de alto, con margen real pero de aspecto intencional.
+export function buildProfileIcon({ isotypeDataUri, size = 1200 }) {
+  const isoHeight = Math.round(size * 0.8);
+  const ringSize = Math.round(size * 0.92);
+
+  return h(
+    "div",
+    {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "relative",
+      width: "100%",
+      height: "100%",
+      backgroundColor: COLORS.bg,
+      backgroundImage: `radial-gradient(circle at 50% 50%, ${COLORS.accentSoft} 0%, transparent 68%)`,
+    },
+    h("div", {
+      position: "absolute",
+      width: ringSize,
+      height: ringSize,
+      borderRadius: 9999,
+      border: "3px solid rgba(124,134,255,0.35)",
+    }),
+    isotypeImg(isotypeDataUri, isoHeight)
+  );
+}
+
 // Portada del perfil de WhatsApp Business (1125x600).
 //
 // Deliberadamente sin texto ni logo centrado: WhatsApp monta la foto de perfil

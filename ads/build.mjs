@@ -13,6 +13,7 @@ import {
   buildAd,
   buildCatalogCard,
   buildCover,
+  buildProfileIcon,
 } from "./templates.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -81,6 +82,13 @@ for (const [index, item] of CATALOG.entries()) {
 const coverPng = await toPng(buildCover({ isotypeDataUri }), 1125, 600);
 writeFileSync(join(OUT, "wa-portada.png"), coverPng);
 console.log("✓ wa-portada.png  1125x600  (portada WhatsApp Business)");
+count++;
+
+// Foto de perfil para redes sociales, 1200x1200. Se convierte a JPG y se
+// copia a brand/ aparte (build.mjs solo deja PNG en ads/out/).
+const profilePng = await toPng(buildProfileIcon({ isotypeDataUri }), 1200, 1200);
+writeFileSync(join(OUT, "perfil-redes.png"), profilePng);
+console.log("✓ perfil-redes.png  1200x1200  (foto de perfil, master)");
 count++;
 
 console.log(`\n${count} imágenes generadas en ads/out/`);
