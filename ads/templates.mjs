@@ -101,7 +101,7 @@ export const WA_VARIANTS = [
   {
     id: "wa-bot",
     eyebrow: "BOTS CON IA",
-    headline: "Tu WhatsApp puede vender y agendar solo.",
+    headline: "Un bot con IA vende y agenda solo, por tu WhatsApp.",
     sub: "Te mostramos cómo funciona, por WhatsApp.",
     cta: "Ver cómo funciona",
     whatsapp: true,
@@ -425,7 +425,7 @@ export function buildFacebookCover({ isotypeDataUri }) {
             color: COLORS.textFaint,
             letterSpacing: 3,
           },
-          "WEB · E-COMMERCE · WHATSAPP · IA"
+          "WEB · E-COMMERCE · BOTS IA · AUTOMATIZACIÓN"
         )
       )
     )

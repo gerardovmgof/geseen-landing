@@ -103,7 +103,7 @@ export default function Hero() {
 
         <motion.div
           variants={item}
-          className="mt-16 flex items-center gap-4 font-mono text-xs tracking-widest text-text-faint"
+          className="mt-16 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-mono text-xs tracking-widest text-text-faint"
         >
           {t.hero.strip.map((word, i) => (
             <span key={word} className="flex items-center gap-4">
