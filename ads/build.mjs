@@ -17,7 +17,7 @@ import {
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = join(HERE, "out");
-const DOMAIN = "geseen-landing.vercel.app";
+const DOMAIN = "geseen.com.mx";
 
 function font(file, name, weight, style = "normal") {
   return {

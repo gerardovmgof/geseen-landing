@@ -21,6 +21,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://www.geseen.com.mx"),
   title: "GESEEN Solutions — Software a la medida",
   description:
     "Diseño, desarrollo y automatización con inteligencia artificial para negocios que quieren dar el siguiente paso.",
