@@ -14,6 +14,8 @@ import {
   buildCatalogCard,
   buildCover,
   buildProfileIcon,
+  buildFacebookCover,
+  buildLinkedInCover,
 } from "./templates.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -89,6 +91,18 @@ count++;
 const profilePng = await toPng(buildProfileIcon({ isotypeDataUri }), 1200, 1200);
 writeFileSync(join(OUT, "perfil-redes.png"), profilePng);
 console.log("✓ perfil-redes.png  1200x1200  (foto de perfil, master)");
+count++;
+
+// Portadas de página, renderizadas a 2x del tamaño que muestra cada
+// plataforma para que se vean nítidas en pantallas retina.
+const fbCoverPng = await toPng(buildFacebookCover({ isotypeDataUri }), 1702, 630);
+writeFileSync(join(OUT, "facebook-portada.png"), fbCoverPng);
+console.log("✓ facebook-portada.png  1702x630  (2x de 851x315, Facebook Page)");
+count++;
+
+const liCoverPng = await toPng(buildLinkedInCover({ isotypeDataUri }), 2256, 382);
+writeFileSync(join(OUT, "linkedin-portada.png"), liCoverPng);
+console.log("✓ linkedin-portada.png  2256x382  (2x de 1128x191, LinkedIn Company Page)");
 count++;
 
 console.log(`\n${count} imágenes generadas en ads/out/`);

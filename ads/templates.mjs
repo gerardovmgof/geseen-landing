@@ -322,6 +322,176 @@ export function buildCover({ isotypeDataUri }) {
   );
 }
 
+// Portadas de página (Facebook Page / LinkedIn Company Page). Ambas plataformas
+// montan el logo/foto de perfil sobre la esquina inferior izquierda de la
+// portada, así que el contenido real vive del centro hacia la derecha; a la
+// izquierda va un isotipo gigante y tenuísimo, puramente decorativo — si el
+// logo lo tapa no importa, no lleva información.
+function coverBackdrop(isotypeDataUri, ghostHeight) {
+  return [
+    h("div", {
+      position: "absolute",
+      inset: 0,
+      backgroundImage: `radial-gradient(circle at 72% 35%, ${COLORS.accentSoft} 0%, transparent 55%)`,
+    }),
+    isotypeImg(isotypeDataUri, ghostHeight, {
+      position: "absolute",
+      left: Math.round(ghostHeight * -0.12),
+      bottom: Math.round(ghostHeight * -0.18),
+      opacity: 0.07,
+    }),
+  ];
+}
+
+// Facebook Page cover. Se renderiza a 1702x630 (2x de 851x315, tamaño que
+// recomienda Facebook) para que se vea nítida en pantallas retina.
+export function buildFacebookCover({ isotypeDataUri }) {
+  return h(
+    "div",
+    {
+      display: "flex",
+      position: "relative",
+      width: "100%",
+      height: "100%",
+      backgroundColor: COLORS.bg,
+      overflow: "hidden",
+      fontFamily: FONTS.sans,
+    },
+    ...coverBackdrop(isotypeDataUri, 1500),
+
+    h(
+      "div",
+      {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
+        justifyContent: "center",
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        paddingRight: 96,
+        paddingLeft: 96,
+      },
+      h(
+        "div",
+        {
+          fontFamily: FONTS.mono,
+          fontSize: 24,
+          color: COLORS.accent,
+          letterSpacing: 3,
+          marginBottom: 20,
+        },
+        "[ GESEEN SOLUTIONS ]"
+      ),
+      h(
+        "div",
+        { display: "flex", alignItems: "center" },
+        isotypeImg(isotypeDataUri, 100, { marginRight: 22 }),
+        h(
+          "div",
+          {
+            fontSize: 76,
+            fontWeight: 600,
+            color: COLORS.text,
+            letterSpacing: -2,
+          },
+          "GESEEN"
+        )
+      ),
+      h(
+        "div",
+        {
+          fontFamily: FONTS.serif,
+          fontStyle: "italic",
+          fontSize: 34,
+          color: COLORS.textDim,
+          marginTop: 18,
+        },
+        "Something you haven't ever seen"
+      ),
+      h(
+        "div",
+        {
+          display: "flex",
+          alignItems: "center",
+          marginTop: 34,
+        },
+        h("div", { width: 48, height: 2, backgroundColor: COLORS.accent, marginRight: 20 }),
+        h(
+          "div",
+          {
+            fontFamily: FONTS.mono,
+            fontSize: 20,
+            color: COLORS.textFaint,
+            letterSpacing: 3,
+          },
+          "WEB · E-COMMERCE · WHATSAPP · IA"
+        )
+      )
+    )
+  );
+}
+
+// LinkedIn Company Page cover. Franja muy angosta (1128x191 real; se renderiza
+// a 2256x382, 2x). No hay espacio para un bloque de varias líneas, así que
+// todo va en un solo renglón horizontal.
+export function buildLinkedInCover({ isotypeDataUri }) {
+  return h(
+    "div",
+    {
+      display: "flex",
+      position: "relative",
+      width: "100%",
+      height: "100%",
+      backgroundColor: COLORS.bg,
+      overflow: "hidden",
+      fontFamily: FONTS.sans,
+    },
+    ...coverBackdrop(isotypeDataUri, 900),
+
+    h(
+      "div",
+      {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        paddingRight: 90,
+      },
+      isotypeImg(isotypeDataUri, 128, { marginRight: 24 }),
+      h(
+        "div",
+        {
+          fontSize: 68,
+          fontWeight: 600,
+          color: COLORS.text,
+          letterSpacing: -1.5,
+        },
+        "GESEEN"
+      ),
+      h("div", {
+        width: 2,
+        height: 60,
+        backgroundColor: COLORS.borderStrong,
+        marginLeft: 32,
+        marginRight: 32,
+      }),
+      h(
+        "div",
+        {
+          fontFamily: FONTS.serif,
+          fontStyle: "italic",
+          fontSize: 38,
+          color: COLORS.textDim,
+        },
+        "Something you haven't ever seen"
+      )
+    )
+  );
+}
+
 // Escalas por formato: cada lienzo necesita su propio ritmo tipográfico.
 // padTop/padBottom extra en story: Instagram tapa ~14% arriba y ~20% abajo
 // con su propia interfaz, así que el contenido se mantiene en la zona segura.
